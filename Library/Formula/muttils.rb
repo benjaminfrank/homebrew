@@ -14,7 +14,7 @@ class Muttils < Formula
     bin.env_script_all_files(libexec/"bin", :PYTHONPATH => ENV["PYTHONPATH"])
   end
 
-  Test do
+  test do
     system "#{bin}/urlpager", "-h"
   end
 end
