@@ -20,7 +20,7 @@ class Muttvcardsearch < Formula
       bin.install "muttvcardsearch"
     end
   end
-  
+
   test do
     true
   end
