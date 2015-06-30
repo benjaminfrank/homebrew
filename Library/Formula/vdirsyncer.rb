@@ -55,6 +55,8 @@ class Vdirsyncer < Formula
   end
 
   test do
-    system "#{bin}/vdirsync", "--version"
+    ENV["LC_ALL"] = "en_US.UTF-8"
+    ENV["LANG"] = "en_US.UTF-8"
+    system "#{bin}/vdirsyncer", "--version"
   end
 end
