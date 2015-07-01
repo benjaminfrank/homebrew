@@ -5,13 +5,12 @@ class Vdirsyncer < Formula
   sha256 "0992d4c0c98e71a0638050f3900125a82bd29e15d5be080a4520830fa48c660a"
 
   option "without-keyring", "Build without python-keyring support"
+
   depends_on :python3
 
-  if build.with? "keyring"
-    resource "keyring" do
-      url "https://pypi.python.org/packages/source/k/keyring/keyring-5.3.zip"
-      sha256 "ac2b4dc17e6edfb804b09ade15df79f251522e442976ea0c8ea0051474502cf5"
-    end
+  resource "keyring" do
+    url "https://pypi.python.org/packages/source/k/keyring/keyring-5.3.zip"
+    sha256 "ac2b4dc17e6edfb804b09ade15df79f251522e442976ea0c8ea0051474502cf5"
   end
 
   resource "click" do
@@ -41,7 +40,9 @@ class Vdirsyncer < Formula
 
   def install
     ENV.prepend_create_path "PYTHONPATH", libexec/"vendor/lib/python3.4/site-packages"
-    %w[keyring click requests lxml requests-toolbelt atomicwrites].each do |r|
+    rs = %w[click requests lxml requests-toolbelt atomicwrites]
+    rs << "keyring" if build.with? "keyring"
+    rs.each do |r|
       resource(r).stage do
         system "python3", *Language::Python.setup_install_args(libexec/"vendor")
       end
